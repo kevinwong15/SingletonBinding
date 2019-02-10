@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SingletonBinding"
+             xmlns:VM="clr-namespace:SingletonBinding.ViewModels"
+             xmlns:Singleton="clr-namespace:SingletonBinding.Singletons"
+             x:Class="SingletonBinding.Views.MainPage">
+
+    <ContentPage.BindingContext>
+        <VM:MainPageVM/>
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Row="0" Text="{Binding FullName, Source={x:Static Singleton:NewChatList.Current}}"/>
+
+            <StackLayout Grid.Row="1">
+                <Button Text="Add Me for Global App" Clicked="Button0_Clicked"/>
+
+                <ListView x:Name="ListView1" ItemsSource="{Binding Source={x:Static local:App.ChatList}}">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Name}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <StackLayout Grid.Row="2">
+                <Button Text="Add Me for Singleton" Clicked="Button1_Clicked"/>
+                <ListView x:Name="ListView3" ItemsSource="{Binding Source={x:Static Singleton:NewChatList.Current}, Path=List}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Name}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <StackLayout Grid.Row="3">
+                <Button Text="Add Me for normalVM" Clicked="Button2_Clicked"/>
+
+                <ListView x:Name="ListView2" ItemsSource="{Binding Playlists}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Name}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+        </Grid>
+
+    </StackLayout>
+</ContentPage>
